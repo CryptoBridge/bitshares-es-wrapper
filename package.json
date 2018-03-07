@@ -1,0 +1,24 @@
+{
+  "name": "bitshares-es-wrapper",
+  "version": "0.0.1",
+  "description": "",
+  "main": "wrapper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node wrapper.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CryptoBridge/es-wrapper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CryptoBridge/es-wrapper/issues"
+  },
+  "homepage": "https://github.com/CryptoBridge/es-wrapper#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "superagent": "^3.8.2"
+  }
+}
