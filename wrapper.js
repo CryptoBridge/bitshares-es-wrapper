@@ -1,8 +1,7 @@
+#!/usr/bin/env node
+
 const request = require('superagent');
 const express = require('express');
-
-
-
 
 var server = express();
 
