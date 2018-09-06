@@ -7,7 +7,7 @@ var server = express();
 
 const esHost = process.env.ES_HOST || 'localhost';
 const esPort = process.env.ES_PORT || 9200;
-const esWrapperPort = process.env.ES_WRAPPER_PORT || 9201;
+const esWrapperPort = process.env.ES_WRAPPER_PORT || 5000;
 
 server.get( '/get_account_history', (req, response, next) => {
 
