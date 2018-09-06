@@ -5,6 +5,10 @@ const express = require('express');
 
 var server = express();
 
+const esHost = process.env.ES_HOST || 'localhost';
+const esPort = process.env.ES_PORT || 9200;
+const esWrapperPort = process.env.ES_WRAPPER_PORT || 9201;
+
 server.get( '/get_account_history', (req, response, next) => {
 
     var account_id= req.query.account_id;
@@ -24,10 +28,8 @@ server.get( '/get_account_history', (req, response, next) => {
         "from": 0, "size": size
     };
 
-
-
     request
-      .post('http://localhost:9200/_search')
+      .post('http://'+ esHost + (esPort ? ':' + esPort : '') +'/_search')
       .send(json)
       .set('accept', 'json')
       .end((err, res) => {
@@ -55,6 +57,6 @@ server.get( '/get_account_history', (req, response, next) => {
       });
 });
 
-server.listen(5000, () => {
-    console.log('BitShares ES Wrapper is running on port 5000');
+server.listen(esWrapperPort, () => {
+    console.log('BitShares ES Wrapper is running on port '+ esWrapperPort);
 });
