@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    // Overrides
+    "arrow-body-style": 0,
+    "comma-dangle": [2, "only-multiline"],
+    "indent": [1, 4, { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "max-len": [0, 200, 4],
+    "no-multi-assign": 0,
+    "no-param-reassign": 0,
+    "space-before-function-paren": [2, "never"]
+  }
+}

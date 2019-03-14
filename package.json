@@ -4,6 +4,7 @@
   "description": "",
   "main": "wrapper.js",
   "scripts": {
+    "lint": "eslint '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node wrapper.js"
   },
@@ -23,5 +24,11 @@
   "dependencies": {
     "express": "^4.16.2",
     "superagent": "^3.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
   }
 }
