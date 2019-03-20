@@ -15,7 +15,7 @@ server.get('/get_account_history', (req, response, next) => {
     } = req.query;
     let { size } = req.query;
 
-    if (!account_id || !from_date || !to_date) { // eslint-disable-line camelcase
+    if (!from_date || !to_date) { // eslint-disable-line camelcase
         const err = new Error('Invalid request');
         err.status = 400;
         return next(err);
@@ -29,7 +29,7 @@ server.get('/get_account_history', (req, response, next) => {
         sort: [{ 'block_data.block_time': { order: 'desc' } }],
         query: {
             bool: {
-                must: [{ match: { 'account_history.account': account_id } },
+                must: [{ match: account_id ? { 'account_history.account': account_id } : undefined }, // eslint-disable-line camelcase
                     { range: { 'block_data.block_time': { gte: from_date, lte: to_date } } }]
             }
         },
