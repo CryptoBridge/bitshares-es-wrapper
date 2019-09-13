@@ -39,7 +39,7 @@ server.get('/get_account_history', (req, response, next) => {
     };
 
     return got
-        .post(`${esProtocol}://${esHost}${esPort ? `:${esPort}` : ''}/_searchhh`, { json: true, body })
+        .post(`${esProtocol}://${esHost}${esPort ? `:${esPort}` : ''}/_search`, { json: true, body })
         .then((res) => {
             if (!res.body || !res.body.hits || !res.body.hits.hits) {
                 console.warn('Empty result'); // eslint-disable-line no-console
