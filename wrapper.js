@@ -25,14 +25,14 @@ server.get('/get_account_history', (req, response, next) => {
         size = 10000;
     }
 
+    const must = [{ range: { 'block_data.block_time': { gte: from_date, lte: to_date } } }];
+    if (account_id) { // eslint-disable-line camelcase
+        must.push({ match: { 'account_history.account': account_id } });
+    }
+
     const json = {
         sort: [{ 'block_data.block_time': { order: 'desc' } }],
-        query: {
-            bool: {
-                must: [{ match: account_id ? { 'account_history.account': account_id } : undefined }, // eslint-disable-line camelcase
-                    { range: { 'block_data.block_time': { gte: from_date, lte: to_date } } }]
-            }
-        },
+        query: { bool: { must } },
         from: from || 0,
         size: size || 100,
     };
