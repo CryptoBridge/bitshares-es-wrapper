@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-const request = require('superagent');
+const got = require('got');
 const express = require('express');
 
 const server = express();
 
+const esProtocol = process.env.ES_PROTOCOL || 'http';
 const esHost = process.env.ES_HOST || 'localhost';
 const esPort = process.env.ES_PORT || 9200;
 const esWrapperPort = process.env.ES_WRAPPER_PORT || 5000;
@@ -30,22 +31,16 @@ server.get('/get_account_history', (req, response, next) => {
         must.push({ match: { 'account_history.account': account_id } });
     }
 
-    const json = {
+    const body = {
         sort: [{ 'block_data.block_time': { order: 'desc' } }],
         query: { bool: { must } },
         from: from || 0,
         size: size || 100,
     };
 
-    return request
-        .post(`http://${esHost}${esPort ? `:${esPort}` : ''}/_search`)
-        .send(json)
-        .set('accept', 'json')
-        .end((err, res) => {
-            if (err) {
-                return next(err);
-            }
-
+    return got
+        .post(`${esProtocol}://${esHost}${esPort ? `:${esPort}` : ''}/_searchhh`, { json: true, body })
+        .then((res) => {
             if (!res.body || !res.body.hits || !res.body.hits.hits) {
                 console.warn('Empty result'); // eslint-disable-line no-console
                 return response.json([]);
@@ -57,22 +52,23 @@ server.get('/get_account_history', (req, response, next) => {
                 return response.json(results);
             }
             return response.json([]);
-        });
+        })
+        .catch(err => next(err))
 });
 
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     if (typeof err === 'string') {
         err = new Error(err);
     }
-    err.status = err.status || 500;
+    err.status = (err.response ? err.response.statusCode : err.status) || 500;
     err.payload = {
         status: err.status,
         stack: err.stack.split('\n'),
-        headers: err.response.headers,
-        query: err.response.query,
-        body: err.response.body,
-        files: err.response.files,
-        exception: err.response.error
+        headers: err.response ? err.response.headers : undefined,
+        query: err.response ? err.response.query : undefined,
+        body: err.response ? err.response.body : undefined,
+        files: err.response ? err.response.files : undefined,
+        exception: err.response ? err.response.error : undefined,
     };
     console.log(`Error ${req.method} ${req.originalUrl} (${err.status}): ${res.get('Content-Length') || 0} Bytes`, err.status !== 404 ? err.payload : ''); // eslint-disable-line no-console
 

@@ -23,12 +23,12 @@
   "homepage": "https://github.com/CryptoBridge/es-wrapper#readme",
   "dependencies": {
     "express": "^4.16.2",
-    "superagent": "^3.8.2"
+    "got": "^9.6.0"
   },
   "devDependencies": {
-    "eslint": "^5.15.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "nodemon": "^1.18.10"
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.2"
   }
 }
