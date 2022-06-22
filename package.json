@@ -23,7 +23,7 @@
   "homepage": "https://github.com/CryptoBridge/es-wrapper#readme",
   "dependencies": {
     "express": "^4.16.2",
-    "got": "^9.6.0"
+    "got": "^11.8.5"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
